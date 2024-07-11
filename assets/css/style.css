@@ -1,0 +1,98 @@
+.accordion {
+    margin-top: 20px;
+}
+
+#meetings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#meetings-table th, #meetings-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#meetings-table th {
+    background-color: #f2f2f2;
+}
+
+#meetings-table tr.highlight {
+    background-color: #ffffcc;
+}
+
+#pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    color: black;
+}
+
+#pagination a.current {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+#attendance-tracker-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#attendance-form, #historical-data {
+    margin-bottom: 30px;
+}
+
+#attendance-history {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#attendance-history th, #attendance-history td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#attendance-history th {
+    background-color: #f2f2f2;
+}
+
+#pagination {
+    margin-top: 20px;
+}
+
+#pagination .page-link {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+}
+
+#pagination .page-link.current {
+    background-color: #f2f2f2;
+}
+
+#edit-attendance-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Add more styles as needed */
