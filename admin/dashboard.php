@@ -206,4 +206,3 @@ function get_store_name($store_id) {
     ));
     return $store_name ? $store_name : 'Unknown Store';
 }
-?>

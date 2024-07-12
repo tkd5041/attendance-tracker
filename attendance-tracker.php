@@ -30,11 +30,54 @@ require_once ATTENDANCE_TRACKER_PATH . 'includes/shortcodes.php';
 register_activation_hook(__FILE__, 'attendance_tracker_activation');
 register_deactivation_hook(__FILE__, 'attendance_tracker_deactivation');
 
-function attendance_tracker_activation() {
+/* function attendance_tracker_activation() {
     if (!wp_next_scheduled('attendance_tracker_weekly_check')) {
         wp_schedule_event(time(), 'weekly', 'attendance_tracker_weekly_check');
     }
 }
+*/
+
+function attendance_tracker_activation() {
+    global $wpdb;
+
+    // Check if tables exist
+    $stores_table = $wpdb->prefix . 'asl_stores';
+    $attendance_table = $wpdb->prefix . 'pal_attendance';
+
+    if($wpdb->get_var("SHOW TABLES LIKE '$stores_table'") != $stores_table) {
+        // Table doesn't exist, so create it and insert data
+        $stores_sql = file_get_contents(ATTENDANCE_TRACKER_PATH . 'wp_asl_stores.sql');
+        $wpdb->query($stores_sql);
+    }
+
+    if($wpdb->get_var("SHOW TABLES LIKE '$attendance_table'") != $attendance_table) {
+        // Table doesn't exist, so create it and insert data
+        $attendance_sql = file_get_contents(ATTENDANCE_TRACKER_PATH . 'wp_pal_attendance.sql');
+        $wpdb->query($attendance_sql);
+    }
+
+    // Create admin user if it doesn't exist
+    if (!username_exists('paladmin')) {
+        $admin_id = wp_create_user('paladmin', 'GetGood1!', 'palgroup.org@gmail.com');
+        $admin_user = new WP_User($admin_id);
+        $admin_user->set_role('administrator');
+        wp_update_user(array('ID' => $admin_id, 'user_pass' => 'GetGood1!'));
+    }
+
+    // Create facilitator user if it doesn't exist
+    if (!username_exists('tobydunn')) {
+        $facilitator_id = wp_create_user('tobydunn', 'GetGood1!', 'toby@sprolo.com');
+        $facilitator_user = new WP_User($facilitator_id);
+        $facilitator_user->set_role('editor'); // Assuming 'editor' is appropriate for a facilitator
+        wp_update_user(array('ID' => $facilitator_id, 'user_pass' => 'GetGood1!'));
+    }
+
+    // Schedule cron job
+    if (!wp_next_scheduled('attendance_tracker_weekly_check')) {
+        wp_schedule_event(time(), 'weekly', 'attendance_tracker_weekly_check');
+    }
+}
+
 
 function attendance_tracker_deactivation() {
     wp_clear_scheduled_hook('attendance_tracker_weekly_check');
